@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require "date"
+require "json"
+require "yaml"
+
+abort "Must have applescript enabled" unless system "command -v osascript > /dev/null"
+
+current_window = `osascript get_window.scpt`
+app_name, *rest = current_window.split ", "
+
+# not using for now
+_window_name = rest.join(", ")
+
+emojis = YAML.safe_load(File.open("./statuses.yml"))
+current_emoji = emojis.fetch app_name, ""
+
+payload = {
+  profile: {
+    status_text: "",
+    status_emoji: current_emoji,
+    status_expiration: Date.today.next_day.to_time.to_i,
+  },
+}
+slack_token = ENV["SLACK_TOKEN"]
+endpoint_url = "https://slack.com/api/users.profile.set"
+
+if slack_token
+  `curl --header "Content-Type: application/json" --header "Authorization: Bearer #{slack_token}" --data '#{payload.to_json}' #{endpoint_url}`
+else
+  abort "No slack token set, exiting."
+end
