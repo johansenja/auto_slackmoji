@@ -8,6 +8,7 @@ Automatically set your Slack status emoji based on the current window you have o
 - Ruby (a new enough version to have JSON, YAML & Date gems included)
 - A Slack API token
 - cUrl
+- Permissions to access accessibility options for your terminal (via System preferences > Security & Privacy > Privacy > Accessibility)
 
 ## Usage:
 
