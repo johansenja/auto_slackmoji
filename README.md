@@ -1,4 +1,4 @@
-# Slack emoji
+# Auto-slack-status-emoji-setter
 
 Automatically set your Slack status emoji based on the current window you have open.
 
